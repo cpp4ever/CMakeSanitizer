@@ -55,6 +55,7 @@ endif()
 if(NOT "${CMAKE_CXX_STANDARD}" STREQUAL "")
    list(APPEND LLVM_EXTRA_ARGUMENTS -DCMAKE_CXX_STANDARD:STRING=${CMAKE_CXX_STANDARD})
 endif()
+list(APPEND LLVM_EXTRA_ARGUMENTS -DLIBCXXABI_USE_LLVM_UNWINDER:STRING=OFF)
 cmake_host_system_information(RESULT LLVM_NUMBER_OF_PHYSICAL_CORES QUERY NUMBER_OF_PHYSICAL_CORES)
 ExternalProject_Add(
    LLVMMemoryWithOrigins
@@ -69,7 +70,7 @@ ExternalProject_Add(
    GIT_TAG llvmorg-${CMAKE_CXX_COMPILER_VERSION}
    # Configure Step Options
    CMAKE_ARGS
-      -DLLVM_ENABLE_RUNTIMES='libcxx|libcxxabi|libunwind'
+      -DLLVM_ENABLE_RUNTIMES='libcxx|libcxxabi'
       -DLLVM_USE_SANITIZER:STRING=MemoryWithOrigins # Enable MSan
       -Wno-dev
       ${LLVM_EXTRA_ARGUMENTS}

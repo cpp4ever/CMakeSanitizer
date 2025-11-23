@@ -11,23 +11,16 @@ permissions:
 
 jobs:
   build:
-    name: "${{matrix.os}} ${{matrix.platform}} ${{matrix.build_type}}: ${{matrix.language}} sanitizers"
+    name: "${{matrix.os}} ${{matrix.platform}} ${{matrix.toolset}} ${{matrix.build_type}}: ${{matrix.language}} sanitizers"
     runs-on: ${{matrix.os}}
     strategy:
       fail-fast: false
       matrix:
         build_type: [Debug, Release]
         language: [C, CXX]
-        os: [windows-2019, windows-2022]
+        os: [windows-latest]
         platform: [Win32, x64]
-        include:
-          - os: windows-2019
-            toolset: v142
-          - os: windows-2022
-            toolset: v143
-        exclude:
-          - os: windows-2019
-            build_type: Release # Test fails to start, investigation needed
+        toolset: [v143]
 
     steps:
     - uses: actions/checkout@v4

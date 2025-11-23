@@ -16,20 +16,18 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        compiler: [clang, gcc]
+        compiler: [clang-18, gcc-14]
         language: [C, CXX]
-        os: [ubuntu-22.04]
+        os: [ubuntu-latest]
         include:
-          - os: ubuntu-22.04
-            compiler: clang
-            cc: clang-15
-            cxx: clang++-15
-            packages: clang-15 libc++-15-dev libc++abi-15-dev
-          - os: ubuntu-22.04
-            compiler: gcc
-            cc: gcc-12
-            cxx: g++-12
-            packages: g++-12 libstdc++-12-dev
+          - compiler: clang-18
+            cc: clang-18
+            cxx: clang++-18
+            packages: clang-18 libc++-18-dev libc++abi-18-dev
+          - compiler: gcc-14
+            cc: gcc-14
+            cxx: g++-14
+            packages: g++-14 libstdc++-14-dev
 
     steps:
     - uses: actions/checkout@v4
