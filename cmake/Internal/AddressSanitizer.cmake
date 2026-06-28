@@ -187,11 +187,7 @@ function(internal_target_asan_options IN_LANGUAGE IN_TARGET IN_COMPILETIME_IGNOR
       else()
          set(ASAN_COMPILE_OPTIONS $<$<COMPILE_LANGUAGE:C,CXX>:${ASAN_COMPILE_OPTIONS}>)
          set(ASAN_LINK_OPTIONS $<$<COMPILE_LANGUAGE:C,CXX>:/DEBUG ${ASAN_LINK_OPTIONS}>)
-         set_target_properties(
-            ${IN_TARGET}
-            PROPERTIES
-               MSVC_DEBUG_INFORMATION_FORMAT "$<$<COMPILE_LANGUAGE:C,CXX>:ProgramDatabase>"
-         )
+         set_target_properties(${IN_TARGET} PROPERTIES MSVC_DEBUG_INFORMATION_FORMAT ProgramDatabase)
       endif()
    else()
       set(
