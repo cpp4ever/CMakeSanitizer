@@ -23,32 +23,6 @@
    SOFTWARE.
 ]]
 
-cmake_minimum_required(VERSION 3.28)
+include(CMakeTargets.cmake)
 
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/")
-
-add_subdirectory(thirdparty EXCLUDE_FROM_ALL SYSTEM)
-
-get_filename_component(CURRENT_PROJECT_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR} REALPATH)
-get_filename_component(ROOT_PROJECT_SOURCE_DIR ${CMAKE_SOURCE_DIR} REALPATH)
-if("${CURRENT_PROJECT_SOURCE_DIR}" STREQUAL "${ROOT_PROJECT_SOURCE_DIR}")
-   set(LANGUAGE "C" CACHE STRING "Choose language")
-   set_property(CACHE LANGUAGE PROPERTY STRINGS "C;CXX")
-   set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-   project(CMakeSanitizer LANGUAGES ${LANGUAGE})
-   set(CMAKE_${LANGUAGE}_EXTENSIONS OFF)
-   set(CMAKE_${LANGUAGE}_STANDARD_REQUIRED ON)
-   set(CMAKE_${LANGUAGE}_STANDARD 11)
-   include(CMake${LANGUAGE}Sanitizer)
-   enable_testing()
-   set(SANITIZERS_PATH_PREFIX "${CMAKE_CURRENT_SOURCE_DIR}/")
-   if(WIN32)
-      string(REPLACE "/" "\\\\" SANITIZERS_PATH_PREFIX ${SANITIZERS_PATH_PREFIX})
-   endif()
-   add_subdirectory(tests)
-   if(TARGET asan_test)
-      set_property(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}" PROPERTY VS_STARTUP_PROJECT asan_test)
-   endif()
-else()
-   set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} PARENT_SCOPE)
-endif()
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} PARENT_SCOPE)
