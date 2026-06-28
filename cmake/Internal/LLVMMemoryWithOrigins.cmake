@@ -59,8 +59,6 @@ list(APPEND LLVM_EXTRA_ARGUMENTS -DLIBCXXABI_USE_LLVM_UNWINDER:BOOL=OFF)
 cmake_host_system_information(RESULT LLVM_NUMBER_OF_PHYSICAL_CORES QUERY NUMBER_OF_PHYSICAL_CORES)
 ExternalProject_Add(
    LLVMMemoryWithOrigins
-   EXCLUDE_FROM_ALL
-   SYSTEM
    # Directory Options
    PREFIX "${CMAKE_CURRENT_BINARY_DIR}/LLVMMemoryWithOrigins"
    # Download Step Options
@@ -91,6 +89,8 @@ ExternalProject_Add(
    LOG_MERGED_STDOUTERR ON
    LOG_OUTPUT_ON_FAILURE ON
    LOG_UPDATE ON
+   # Target Options
+   EXCLUDE_FROM_ALL ON
    # Miscellaneous Options
    LIST_SEPARATOR |
 )
